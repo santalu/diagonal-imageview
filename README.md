@@ -1,6 +1,6 @@
 # Diagonal ImageView
 
-[![](https://jitpack.io/v/santalu/diagonal-imageview.svg)](https://jitpack.io/#santalu/diagonal-imageview)
+[![](https://jitpack.io/v/santalu/diagonal-imageview.svg)](https://jitpack.io/#santalu/diagonal-imageview) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Diagonal%20ImageView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/6040)
 
 A simple imageview which allows you to create diagonal cut views easily
 
