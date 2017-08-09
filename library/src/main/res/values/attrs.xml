@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="DiagonalImageView">
+        <attr format="enum" name="di_position">
+            <enum name="top" value="1"/>
+            <enum name="right" value="2"/>
+            <enum name="bottom" value="4"/>
+            <enum name="left" value="8"/>
+        </attr>
+        <attr format="enum" name="di_direction">
+            <enum name="top" value="1"/>
+            <enum name="right" value="2"/>
+            <enum name="bottom" value="4"/>
+            <enum name="left" value="8"/>
+        </attr>
+        <attr format="dimension" name="di_overlap"/>
+        <attr format="dimension" name="di_borderSize"/>
+        <attr format="color" name="di_borderColor"/>
+        <attr format="boolean" name="di_borderEnabled"/>
+    </declare-styleable>
+
+</resources>

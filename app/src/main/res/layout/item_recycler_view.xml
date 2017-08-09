@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.santalu.diagonalimageview.DiagonalImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/image"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/image_height"
+    android:scaleType="centerCrop"
+    android:src="@drawable/demo"
+    app:di_borderColor="@color/deep_orange"
+    app:di_borderEnabled="true"
+    app:di_borderSize="@dimen/line_size"
+    app:di_overlap="@dimen/overlap_size"/>
