@@ -34,7 +34,7 @@ dependencies {
 ```
 
 ### XML
-```
+```xml
 <com.santalu.diagonalimageview.DiagonalImageView
     android:id="@+id/image"
     android:layout_width="120dp"
