@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button sampleGrid = findViewById(R.id.sample_grid);
         Button sampleList = findViewById(R.id.sample_list);
+        Button sampleListComplex = findViewById(R.id.sample_list_complex);
         Button sampleCard = findViewById(R.id.sample_card);
         Button sampleCollapsing = findViewById(R.id.sample_collapsing);
 
@@ -29,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
         sampleList.setOnClickListener(new OnClickListener() {
             @Override public void onClick(View v) {
                 RecyclerViewSampleActivity.start(MainActivity.this);
+            }
+        });
+
+        sampleListComplex.setOnClickListener(new OnClickListener() {
+            @Override public void onClick(View v) {
+                RecyclerViewComplexSampleActivity.start(MainActivity.this);
             }
         });
 

@@ -8,7 +8,9 @@
     <dimen name="overlap_size">56dp</dimen>
     <dimen name="collapsing_overlap_size">96dp</dimen>
     <dimen name="line_size">8dp</dimen>
+    <dimen name="indicator_padding">8dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="fab_size">72dp</dimen>
+    <dimen name="pager_height">200dp</dimen>
 
 </resources>

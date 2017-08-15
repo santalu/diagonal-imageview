@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.santalu.myapplication">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,6 +31,11 @@
         <activity
             android:name=".RecyclerViewSampleActivity"
             android:label="@string/sample_list"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".RecyclerViewComplexSampleActivity"
+            android:label="@string/sample_list_complex"
             android:screenOrientation="portrait"/>
 
         <activity

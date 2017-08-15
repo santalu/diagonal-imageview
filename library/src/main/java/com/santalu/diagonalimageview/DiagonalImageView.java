@@ -7,8 +7,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.support.annotation.IntDef;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Created by santalu on 7/4/17.
@@ -25,7 +29,17 @@ import android.util.AttributeSet;
 
 public class DiagonalImageView extends AppCompatImageView {
 
-    private static final String TAG = DiagonalImageView.class.getSimpleName();
+    public static final String TAG = DiagonalImageView.class.getSimpleName();
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({ NONE, LEFT, RIGHT, TOP, BOTTOM })
+    public @interface Position {
+    }
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({ LEFT, RIGHT, TOP, BOTTOM })
+    public @interface Direction {
+    }
 
     public static final int NONE = 0;
     public static final int TOP = 1;
@@ -80,7 +94,7 @@ public class DiagonalImageView extends AppCompatImageView {
         }
     }
 
-    public void set(int position, int direction) {
+    public void set(@Position int position, @Direction int direction) {
         if (mPosition != position || mDirection != direction) {
             mClipPath.reset();
             mBorderPath.reset();
@@ -90,7 +104,7 @@ public class DiagonalImageView extends AppCompatImageView {
         postInvalidate();
     }
 
-    public void setPosition(int position) {
+    public void setPosition(@Position int position) {
         if (mPosition != position) {
             mClipPath.reset();
             mBorderPath.reset();
@@ -99,7 +113,7 @@ public class DiagonalImageView extends AppCompatImageView {
         postInvalidate();
     }
 
-    public void setDirection(int direction) {
+    public void setDirection(@Direction int direction) {
         if (mDirection != direction) {
             mClipPath.reset();
             mBorderPath.reset();
@@ -111,6 +125,18 @@ public class DiagonalImageView extends AppCompatImageView {
     public void setBorderEnabled(boolean enabled) {
         mBorderEnabled = enabled;
         postInvalidate();
+    }
+
+    public @Position int getPosition() {
+        return mPosition;
+    }
+
+    public @Direction int getDirection() {
+        return mDirection;
+    }
+
+    public boolean isBorderEnabled() {
+        return mBorderEnabled;
     }
 
     @Override protected void onDraw(Canvas canvas) {
@@ -142,106 +168,110 @@ public class DiagonalImageView extends AppCompatImageView {
                 return;
             }
 
-            mClipPath.reset();
-            mBorderPath.reset();
-
-            switch (mPosition) {
-                case TOP:
-                    if (mDirection == LEFT) {
-                        mClipPath.moveTo(0, 0);
-                        mClipPath.lineTo(width, mOverlap);
-                        mClipPath.lineTo(width, height);
-                        mClipPath.lineTo(0, height);
-
-                        if (mBorderEnabled) {
-                            mBorderPath.moveTo(0, 0);
-                            mBorderPath.lineTo(width, mOverlap);
-                        }
-                    } else {
-                        mClipPath.moveTo(0, mOverlap);
-                        mClipPath.lineTo(width, 0);
-                        mClipPath.lineTo(width, height);
-                        mClipPath.lineTo(0, height);
-
-                        if (mBorderEnabled) {
-                            mBorderPath.moveTo(0, mOverlap);
-                            mBorderPath.lineTo(width, 0);
-                        }
-                    }
-                    break;
-                case RIGHT:
-                    if (mDirection == TOP) {
-                        mClipPath.moveTo(0, 0);
-                        mClipPath.lineTo(width, 0);
-                        mClipPath.lineTo(width - mOverlap, height);
-                        mClipPath.lineTo(0, height);
-
-                        if (mBorderEnabled) {
-                            mBorderPath.moveTo(width, 0);
-                            mBorderPath.lineTo(width - mOverlap, height);
-                        }
-                    } else {
-                        mClipPath.moveTo(0, 0);
-                        mClipPath.lineTo(width - mOverlap, 0);
-                        mClipPath.lineTo(width, height);
-                        mClipPath.lineTo(0, height);
-
-                        if (mBorderEnabled) {
-                            mBorderPath.moveTo(width - mOverlap, 0);
-                            mBorderPath.lineTo(width, height);
-                        }
-                    }
-                    break;
-                case BOTTOM:
-                    if (mDirection == LEFT) {
-                        mClipPath.moveTo(0, 0);
-                        mClipPath.lineTo(width, 0);
-                        mClipPath.lineTo(width, height - mOverlap);
-                        mClipPath.lineTo(0, height);
-
-                        if (mBorderEnabled) {
-                            mBorderPath.moveTo(0, height);
-                            mBorderPath.lineTo(width, height - mOverlap);
-                        }
-                    } else {
-                        mClipPath.moveTo(0, 0);
-                        mClipPath.lineTo(width, 0);
-                        mClipPath.lineTo(width, height);
-                        mClipPath.lineTo(0, height - mOverlap);
-
-                        if (mBorderEnabled) {
-                            mBorderPath.moveTo(0, height - mOverlap);
-                            mBorderPath.lineTo(width, height);
-                        }
-                    }
-                    break;
-                case LEFT:
-                    if (mDirection == TOP) {
-                        mClipPath.moveTo(0, 0);
-                        mClipPath.lineTo(width, 0);
-                        mClipPath.lineTo(width, height);
-                        mClipPath.lineTo(mOverlap, height);
-
-                        if (mBorderEnabled) {
-                            mBorderPath.moveTo(0, 0);
-                            mBorderPath.lineTo(mOverlap, height);
-                        }
-                    } else {
-                        mClipPath.moveTo(mOverlap, 0);
-                        mClipPath.lineTo(width, 0);
-                        mClipPath.lineTo(width, height);
-                        mClipPath.lineTo(0, height);
-
-                        if (mBorderEnabled) {
-                            mBorderPath.moveTo(mOverlap, 0);
-                            mBorderPath.lineTo(0, height);
-                        }
-                    }
-                    break;
-            }
-
-            mClipPath.close();
-            mBorderPath.close();
+            setClipPath(width, height);
         }
+    }
+
+    private void setClipPath(final int width, final int height) {
+        mClipPath.reset();
+        mBorderPath.reset();
+
+        switch (mPosition) {
+            case TOP:
+                if (mDirection == LEFT) {
+                    mClipPath.moveTo(0, 0);
+                    mClipPath.lineTo(width, mOverlap);
+                    mClipPath.lineTo(width, height);
+                    mClipPath.lineTo(0, height);
+
+                    if (mBorderEnabled) {
+                        mBorderPath.moveTo(0, 0);
+                        mBorderPath.lineTo(width, mOverlap);
+                    }
+                } else {
+                    mClipPath.moveTo(0, mOverlap);
+                    mClipPath.lineTo(width, 0);
+                    mClipPath.lineTo(width, height);
+                    mClipPath.lineTo(0, height);
+
+                    if (mBorderEnabled) {
+                        mBorderPath.moveTo(0, mOverlap);
+                        mBorderPath.lineTo(width, 0);
+                    }
+                }
+                break;
+            case RIGHT:
+                if (mDirection == TOP) {
+                    mClipPath.moveTo(0, 0);
+                    mClipPath.lineTo(width, 0);
+                    mClipPath.lineTo(width - mOverlap, height);
+                    mClipPath.lineTo(0, height);
+
+                    if (mBorderEnabled) {
+                        mBorderPath.moveTo(width, 0);
+                        mBorderPath.lineTo(width - mOverlap, height);
+                    }
+                } else {
+                    mClipPath.moveTo(0, 0);
+                    mClipPath.lineTo(width - mOverlap, 0);
+                    mClipPath.lineTo(width, height);
+                    mClipPath.lineTo(0, height);
+
+                    if (mBorderEnabled) {
+                        mBorderPath.moveTo(width - mOverlap, 0);
+                        mBorderPath.lineTo(width, height);
+                    }
+                }
+                break;
+            case BOTTOM:
+                if (mDirection == LEFT) {
+                    mClipPath.moveTo(0, 0);
+                    mClipPath.lineTo(width, 0);
+                    mClipPath.lineTo(width, height - mOverlap);
+                    mClipPath.lineTo(0, height);
+
+                    if (mBorderEnabled) {
+                        mBorderPath.moveTo(0, height);
+                        mBorderPath.lineTo(width, height - mOverlap);
+                    }
+                } else {
+                    mClipPath.moveTo(0, 0);
+                    mClipPath.lineTo(width, 0);
+                    mClipPath.lineTo(width, height);
+                    mClipPath.lineTo(0, height - mOverlap);
+
+                    if (mBorderEnabled) {
+                        mBorderPath.moveTo(0, height - mOverlap);
+                        mBorderPath.lineTo(width, height);
+                    }
+                }
+                break;
+            case LEFT:
+                if (mDirection == TOP) {
+                    mClipPath.moveTo(0, 0);
+                    mClipPath.lineTo(width, 0);
+                    mClipPath.lineTo(width, height);
+                    mClipPath.lineTo(mOverlap, height);
+
+                    if (mBorderEnabled) {
+                        mBorderPath.moveTo(0, 0);
+                        mBorderPath.lineTo(mOverlap, height);
+                    }
+                } else {
+                    mClipPath.moveTo(mOverlap, 0);
+                    mClipPath.lineTo(width, 0);
+                    mClipPath.lineTo(width, height);
+                    mClipPath.lineTo(0, height);
+
+                    if (mBorderEnabled) {
+                        mBorderPath.moveTo(mOverlap, 0);
+                        mBorderPath.lineTo(0, height);
+                    }
+                }
+                break;
+        }
+
+        mClipPath.close();
+        mBorderPath.close();
     }
 }

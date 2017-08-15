@@ -21,6 +21,12 @@
             android:text="@string/sample_list"/>
 
         <Button
+            android:id="@+id/sample_list_complex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sample_list_complex"/>
+
+        <Button
             android:id="@+id/sample_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
