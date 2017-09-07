@@ -13,7 +13,6 @@ import android.graphics.Region;
 import android.support.annotation.IntDef;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import java.lang.annotation.Retention;
@@ -36,9 +35,6 @@ public class DiagonalImageView extends AppCompatImageView {
 
     public static final String TAG = DiagonalImageView.class.getSimpleName();
 
-    private Region mClickRegion;
-    private RectF mClickRect = new RectF();
-
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({ NONE, LEFT, RIGHT, TOP, BOTTOM })
     public @interface Position {
@@ -59,6 +55,9 @@ public class DiagonalImageView extends AppCompatImageView {
     private final Path mBorderPath = new Path();
 
     private final Paint mBorderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    private Region mClickRegion = new Region();
+    private RectF mClickRect = new RectF();
 
     private int mPosition;
     private int mDirection;
@@ -82,9 +81,6 @@ public class DiagonalImageView extends AppCompatImageView {
         if (attrs == null) {
             return;
         }
-
-        //this.setOnTouchListener(this);
-        mClickRegion = new Region();
 
         setLayerType(LAYER_TYPE_HARDWARE, null);
 
@@ -197,9 +193,9 @@ public class DiagonalImageView extends AppCompatImageView {
                     Point point = new Point();
                     point.x = (int) event.getX();
                     point.y = (int) event.getY();
-                    Log.d(TAG, "point: " + point);
+                    //Log.d(TAG, "point: " + point);
                     if (!mClickRegion.contains(point.x, point.y)) {
-                        Log.d(TAG, "clicked outside");
+                        //Log.d(TAG, "clicked outside");
                         return false;
                     }
             }
@@ -305,7 +301,6 @@ public class DiagonalImageView extends AppCompatImageView {
                 }
                 break;
         }
-
 
         mClipPath.close();
         mClipPath.computeBounds(mClickRect, true);
