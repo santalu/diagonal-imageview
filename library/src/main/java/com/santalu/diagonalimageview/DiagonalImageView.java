@@ -7,9 +7,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.graphics.Point;
+import android.graphics.RectF;
+import android.graphics.Region;
 import android.support.annotation.IntDef;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -30,6 +35,9 @@ import java.lang.annotation.RetentionPolicy;
 public class DiagonalImageView extends AppCompatImageView {
 
     public static final String TAG = DiagonalImageView.class.getSimpleName();
+
+    private Region mClickRegion;
+    private RectF mClickRect = new RectF();
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({ NONE, LEFT, RIGHT, TOP, BOTTOM })
@@ -74,6 +82,9 @@ public class DiagonalImageView extends AppCompatImageView {
         if (attrs == null) {
             return;
         }
+
+        //this.setOnTouchListener(this);
+        mClickRegion = new Region();
 
         setLayerType(LAYER_TYPE_HARDWARE, null);
 
@@ -154,6 +165,13 @@ public class DiagonalImageView extends AppCompatImageView {
         canvas.restoreToCount(saveCount);
     }
 
+    @Override protected void dispatchDraw(Canvas canvas) {
+        if (!mClipPath.isEmpty()) {
+            canvas.clipPath(mClipPath);
+        }
+        super.dispatchDraw(canvas);
+    }
+
     @Override protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         if (!changed) {
@@ -170,6 +188,23 @@ public class DiagonalImageView extends AppCompatImageView {
 
             setClipPath(width, height);
         }
+    }
+
+    @Override public boolean onTouchEvent(MotionEvent event) {
+        if (!mClickRegion.isEmpty()) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    Point point = new Point();
+                    point.x = (int) event.getX();
+                    point.y = (int) event.getY();
+                    Log.d(TAG, "point: " + point);
+                    if (!mClickRegion.contains(point.x, point.y)) {
+                        Log.d(TAG, "clicked outside");
+                        return false;
+                    }
+            }
+        }
+        return super.onTouchEvent(event);
     }
 
     private void setClipPath(final int width, final int height) {
@@ -271,7 +306,10 @@ public class DiagonalImageView extends AppCompatImageView {
                 break;
         }
 
+
         mClipPath.close();
+        mClipPath.computeBounds(mClickRect, true);
+        mClickRegion.setPath(mClipPath, new Region((int) mClickRect.left, (int) mClickRect.top, (int) mClickRect.right, (int) mClickRect.bottom));
         mBorderPath.close();
     }
 }

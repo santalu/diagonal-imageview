@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="deep_orange">#FF5722</color>
+
+    <color name="transparent">#66FF00FF</color>
+
 </resources>
