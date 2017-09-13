@@ -10,6 +10,8 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.Region;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.support.annotation.IntDef;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
@@ -51,21 +53,21 @@ public class DiagonalImageView extends AppCompatImageView {
     public static final int BOTTOM = 4;
     public static final int LEFT = 8;
 
-    private final Path mClipPath = new Path();
-    private final Path mBorderPath = new Path();
+    private final Path clipPath = new Path();
+    private final Path borderPath = new Path();
 
-    private final Paint mBorderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    private Region mClickRegion = new Region();
-    private RectF mClickRect = new RectF();
+    private Region clickRegion = new Region();
+    private RectF clickRect = new RectF();
 
-    private int mPosition;
-    private int mDirection;
-    private int mOverlap;
-    private int mBorderColor;
-    private int mBorderSize;
+    private int position;
+    private int direction;
+    private int overlap;
+    private int borderColor;
+    private int borderSize;
 
-    private boolean mBorderEnabled;
+    private boolean borderEnabled;
 
     public DiagonalImageView(Context context) {
         super(context);
@@ -82,88 +84,94 @@ public class DiagonalImageView extends AppCompatImageView {
             return;
         }
 
-        setLayerType(LAYER_TYPE_HARDWARE, null);
+        // clipPath is first support from api level 18
+        // refer to this https://developer.android.com/guide/topics/graphics/hardware-accel.html#unsupported
+        if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR2) {
+            setLayerType(LAYER_TYPE_HARDWARE, null);
+        } else {
+            setLayerType(LAYER_TYPE_SOFTWARE, null);
+        }
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DiagonalImageView);
         try {
-            mPosition = a.getInteger(R.styleable.DiagonalImageView_di_position, NONE);
-            mDirection = a.getInteger(R.styleable.DiagonalImageView_di_direction, RIGHT);
-            mOverlap = a.getDimensionPixelSize(R.styleable.DiagonalImageView_di_overlap, 0);
-            mBorderSize = a.getDimensionPixelSize(R.styleable.DiagonalImageView_di_borderSize, 0);
-            mBorderColor = a.getColor(R.styleable.DiagonalImageView_di_borderColor, Color.BLACK);
-            mBorderEnabled = a.getBoolean(R.styleable.DiagonalImageView_di_borderEnabled, false);
+            position = a.getInteger(R.styleable.DiagonalImageView_di_position, NONE);
+            direction = a.getInteger(R.styleable.DiagonalImageView_di_direction, RIGHT);
+            overlap = a.getDimensionPixelSize(R.styleable.DiagonalImageView_di_overlap, 0);
+            borderSize = a.getDimensionPixelSize(R.styleable.DiagonalImageView_di_borderSize, 0);
+            borderColor = a.getColor(R.styleable.DiagonalImageView_di_borderColor, Color.BLACK);
+            borderEnabled = a.getBoolean(R.styleable.DiagonalImageView_di_borderEnabled, false);
 
-            mBorderPaint.setColor(mBorderColor);
-            mBorderPaint.setStyle(Style.STROKE);
-            mBorderPaint.setStrokeWidth(mBorderSize);
+            borderPaint.setColor(borderColor);
+            borderPaint.setStyle(Style.STROKE);
+            borderPaint.setStrokeWidth(borderSize);
         } finally {
             a.recycle();
         }
     }
 
     public void set(@Position int position, @Direction int direction) {
-        if (mPosition != position || mDirection != direction) {
-            mClipPath.reset();
-            mBorderPath.reset();
+        if (this.position != position || this.direction != direction) {
+            clipPath.reset();
+            borderPath.reset();
         }
-        mPosition = position;
-        mDirection = direction;
+        this.position = position;
+        this.direction = direction;
         postInvalidate();
     }
 
     public void setPosition(@Position int position) {
-        if (mPosition != position) {
-            mClipPath.reset();
-            mBorderPath.reset();
+        if (this.position != position) {
+            clipPath.reset();
+            borderPath.reset();
         }
-        mPosition = position;
+        this.position = position;
         postInvalidate();
     }
 
     public void setDirection(@Direction int direction) {
-        if (mDirection != direction) {
-            mClipPath.reset();
-            mBorderPath.reset();
+        if (this.direction != direction) {
+            clipPath.reset();
+            borderPath.reset();
         }
-        mDirection = direction;
+        this.direction = direction;
         postInvalidate();
     }
 
     public void setBorderEnabled(boolean enabled) {
-        mBorderEnabled = enabled;
+        borderEnabled = enabled;
         postInvalidate();
     }
 
     public @Position int getPosition() {
-        return mPosition;
+        return position;
     }
 
     public @Direction int getDirection() {
-        return mDirection;
+        return direction;
     }
 
     public boolean isBorderEnabled() {
-        return mBorderEnabled;
+        return borderEnabled;
     }
 
     @Override protected void onDraw(Canvas canvas) {
-        if (mClipPath.isEmpty()) {
+        if (clipPath.isEmpty()) {
             super.onDraw(canvas);
             return;
         }
 
         int saveCount = canvas.save();
-        canvas.clipPath(mClipPath);
+        canvas.clipPath(clipPath);
         super.onDraw(canvas);
-        if (!mBorderPath.isEmpty()) {
-            canvas.drawPath(mBorderPath, mBorderPaint);
+        if (!borderPath.isEmpty()) {
+            canvas.drawPath(borderPath, borderPaint);
         }
         canvas.restoreToCount(saveCount);
     }
 
     @Override protected void dispatchDraw(Canvas canvas) {
-        if (!mClipPath.isEmpty()) {
-            canvas.clipPath(mClipPath);
+        if (!clipPath.isEmpty()) {
+            canvas.clipPath(clipPath);
         }
         super.dispatchDraw(canvas);
     }
@@ -174,7 +182,7 @@ public class DiagonalImageView extends AppCompatImageView {
             return;
         }
 
-        if (mClipPath.isEmpty()) {
+        if (clipPath.isEmpty()) {
             int width = getMeasuredWidth();
             int height = getMeasuredHeight();
 
@@ -187,15 +195,13 @@ public class DiagonalImageView extends AppCompatImageView {
     }
 
     @Override public boolean onTouchEvent(MotionEvent event) {
-        if (!mClickRegion.isEmpty()) {
+        if (!clickRegion.isEmpty()) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     Point point = new Point();
                     point.x = (int) event.getX();
                     point.y = (int) event.getY();
-                    //Log.d(TAG, "point: " + point);
-                    if (!mClickRegion.contains(point.x, point.y)) {
-                        //Log.d(TAG, "clicked outside");
+                    if (!clickRegion.contains(point.x, point.y)) {
                         return false;
                     }
             }
@@ -204,107 +210,107 @@ public class DiagonalImageView extends AppCompatImageView {
     }
 
     private void setClipPath(final int width, final int height) {
-        mClipPath.reset();
-        mBorderPath.reset();
+        clipPath.reset();
+        borderPath.reset();
 
-        switch (mPosition) {
+        switch (position) {
             case TOP:
-                if (mDirection == LEFT) {
-                    mClipPath.moveTo(0, 0);
-                    mClipPath.lineTo(width, mOverlap);
-                    mClipPath.lineTo(width, height);
-                    mClipPath.lineTo(0, height);
+                if (direction == LEFT) {
+                    clipPath.moveTo(0, 0);
+                    clipPath.lineTo(width, overlap);
+                    clipPath.lineTo(width, height);
+                    clipPath.lineTo(0, height);
 
-                    if (mBorderEnabled) {
-                        mBorderPath.moveTo(0, 0);
-                        mBorderPath.lineTo(width, mOverlap);
+                    if (borderEnabled) {
+                        borderPath.moveTo(0, 0);
+                        borderPath.lineTo(width, overlap);
                     }
                 } else {
-                    mClipPath.moveTo(0, mOverlap);
-                    mClipPath.lineTo(width, 0);
-                    mClipPath.lineTo(width, height);
-                    mClipPath.lineTo(0, height);
+                    clipPath.moveTo(0, overlap);
+                    clipPath.lineTo(width, 0);
+                    clipPath.lineTo(width, height);
+                    clipPath.lineTo(0, height);
 
-                    if (mBorderEnabled) {
-                        mBorderPath.moveTo(0, mOverlap);
-                        mBorderPath.lineTo(width, 0);
+                    if (borderEnabled) {
+                        borderPath.moveTo(0, overlap);
+                        borderPath.lineTo(width, 0);
                     }
                 }
                 break;
             case RIGHT:
-                if (mDirection == TOP) {
-                    mClipPath.moveTo(0, 0);
-                    mClipPath.lineTo(width, 0);
-                    mClipPath.lineTo(width - mOverlap, height);
-                    mClipPath.lineTo(0, height);
+                if (direction == TOP) {
+                    clipPath.moveTo(0, 0);
+                    clipPath.lineTo(width, 0);
+                    clipPath.lineTo(width - overlap, height);
+                    clipPath.lineTo(0, height);
 
-                    if (mBorderEnabled) {
-                        mBorderPath.moveTo(width, 0);
-                        mBorderPath.lineTo(width - mOverlap, height);
+                    if (borderEnabled) {
+                        borderPath.moveTo(width, 0);
+                        borderPath.lineTo(width - overlap, height);
                     }
                 } else {
-                    mClipPath.moveTo(0, 0);
-                    mClipPath.lineTo(width - mOverlap, 0);
-                    mClipPath.lineTo(width, height);
-                    mClipPath.lineTo(0, height);
+                    clipPath.moveTo(0, 0);
+                    clipPath.lineTo(width - overlap, 0);
+                    clipPath.lineTo(width, height);
+                    clipPath.lineTo(0, height);
 
-                    if (mBorderEnabled) {
-                        mBorderPath.moveTo(width - mOverlap, 0);
-                        mBorderPath.lineTo(width, height);
+                    if (borderEnabled) {
+                        borderPath.moveTo(width - overlap, 0);
+                        borderPath.lineTo(width, height);
                     }
                 }
                 break;
             case BOTTOM:
-                if (mDirection == LEFT) {
-                    mClipPath.moveTo(0, 0);
-                    mClipPath.lineTo(width, 0);
-                    mClipPath.lineTo(width, height - mOverlap);
-                    mClipPath.lineTo(0, height);
+                if (direction == LEFT) {
+                    clipPath.moveTo(0, 0);
+                    clipPath.lineTo(width, 0);
+                    clipPath.lineTo(width, height - overlap);
+                    clipPath.lineTo(0, height);
 
-                    if (mBorderEnabled) {
-                        mBorderPath.moveTo(0, height);
-                        mBorderPath.lineTo(width, height - mOverlap);
+                    if (borderEnabled) {
+                        borderPath.moveTo(0, height);
+                        borderPath.lineTo(width, height - overlap);
                     }
                 } else {
-                    mClipPath.moveTo(0, 0);
-                    mClipPath.lineTo(width, 0);
-                    mClipPath.lineTo(width, height);
-                    mClipPath.lineTo(0, height - mOverlap);
+                    clipPath.moveTo(0, 0);
+                    clipPath.lineTo(width, 0);
+                    clipPath.lineTo(width, height);
+                    clipPath.lineTo(0, height - overlap);
 
-                    if (mBorderEnabled) {
-                        mBorderPath.moveTo(0, height - mOverlap);
-                        mBorderPath.lineTo(width, height);
+                    if (borderEnabled) {
+                        borderPath.moveTo(0, height - overlap);
+                        borderPath.lineTo(width, height);
                     }
                 }
                 break;
             case LEFT:
-                if (mDirection == TOP) {
-                    mClipPath.moveTo(0, 0);
-                    mClipPath.lineTo(width, 0);
-                    mClipPath.lineTo(width, height);
-                    mClipPath.lineTo(mOverlap, height);
+                if (direction == TOP) {
+                    clipPath.moveTo(0, 0);
+                    clipPath.lineTo(width, 0);
+                    clipPath.lineTo(width, height);
+                    clipPath.lineTo(overlap, height);
 
-                    if (mBorderEnabled) {
-                        mBorderPath.moveTo(0, 0);
-                        mBorderPath.lineTo(mOverlap, height);
+                    if (borderEnabled) {
+                        borderPath.moveTo(0, 0);
+                        borderPath.lineTo(overlap, height);
                     }
                 } else {
-                    mClipPath.moveTo(mOverlap, 0);
-                    mClipPath.lineTo(width, 0);
-                    mClipPath.lineTo(width, height);
-                    mClipPath.lineTo(0, height);
+                    clipPath.moveTo(overlap, 0);
+                    clipPath.lineTo(width, 0);
+                    clipPath.lineTo(width, height);
+                    clipPath.lineTo(0, height);
 
-                    if (mBorderEnabled) {
-                        mBorderPath.moveTo(mOverlap, 0);
-                        mBorderPath.lineTo(0, height);
+                    if (borderEnabled) {
+                        borderPath.moveTo(overlap, 0);
+                        borderPath.lineTo(0, height);
                     }
                 }
                 break;
         }
 
-        mClipPath.close();
-        mClipPath.computeBounds(mClickRect, true);
-        mClickRegion.setPath(mClipPath, new Region((int) mClickRect.left, (int) mClickRect.top, (int) mClickRect.right, (int) mClickRect.bottom));
-        mBorderPath.close();
+        clipPath.close();
+        clipPath.computeBounds(clickRect, true);
+        clickRegion.setPath(clipPath, new Region((int) clickRect.left, (int) clickRect.top, (int) clickRect.right, (int) clickRect.bottom));
+        borderPath.close();
     }
 }
