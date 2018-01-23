@@ -42,15 +42,17 @@ public class RecyclerViewSampleActivity extends AppCompatActivity {
     }
 
     static class SampleAdapter extends RecyclerView.Adapter<SampleAdapter.ViewHolder> {
-        private final LayoutInflater mInflater;
+
+        private final LayoutInflater inflater;
 
         SampleAdapter(Context context) {
-            mInflater = LayoutInflater.from(context);
+            inflater = LayoutInflater.from(context);
         }
 
         @Override
         public SampleAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new SampleAdapter.ViewHolder(mInflater.inflate(R.layout.item_recycler_view, parent, false));
+            return new SampleAdapter.ViewHolder(
+                    inflater.inflate(R.layout.item_recycler_view, parent, false));
         }
 
         @Override public void onBindViewHolder(SampleAdapter.ViewHolder holder, int position) {
@@ -62,6 +64,7 @@ public class RecyclerViewSampleActivity extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
+
             DiagonalImageView image;
 
             ViewHolder(View itemView) {
@@ -85,17 +88,21 @@ public class RecyclerViewSampleActivity extends AppCompatActivity {
     }
 
     static class OverlapItemDecoration extends RecyclerView.ItemDecoration {
-        private int mOverlap;
+
+        private int overlap;
 
         OverlapItemDecoration(int overlap) {
-            mOverlap = overlap;
+            this.overlap = overlap;
         }
 
         @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        public void getItemOffsets(Rect outRect,
+                View view,
+                RecyclerView parent,
+                RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
             if (parent.getChildAdapterPosition(view) > 0) {
-                outRect.top = mOverlap;
+                outRect.top = overlap;
             }
         }
     }

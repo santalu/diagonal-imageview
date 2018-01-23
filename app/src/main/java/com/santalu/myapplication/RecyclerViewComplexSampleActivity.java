@@ -48,25 +48,28 @@ public class RecyclerViewComplexSampleActivity extends AppCompatActivity {
     }
 
     static class SampleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
         private static final int TYPE_PAGER = 1;
         private static final int TYPE_REGULAR = 2;
 
-        private final Context mContext;
-        private final LayoutInflater mInflater;
+        private final Context context;
+        private final LayoutInflater inflater;
 
         SampleAdapter(Context context) {
-            mContext = context;
-            mInflater = LayoutInflater.from(context);
+            this.context = context;
+            inflater = LayoutInflater.from(context);
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             switch (viewType) {
                 case TYPE_PAGER:
-                    return new SampleAdapter.PagerHolder(mInflater.inflate(R.layout.item_view_pager, parent, false));
+                    return new SampleAdapter.PagerHolder(
+                            inflater.inflate(R.layout.item_view_pager, parent, false));
                 case TYPE_REGULAR:
                 default:
-                    return new SampleAdapter.ViewHolder(mInflater.inflate(R.layout.item_recycler_view, parent, false));
+                    return new SampleAdapter.ViewHolder(
+                            inflater.inflate(R.layout.item_recycler_view, parent, false));
             }
         }
 
@@ -93,6 +96,7 @@ public class RecyclerViewComplexSampleActivity extends AppCompatActivity {
         }
 
         class PagerHolder extends RecyclerView.ViewHolder {
+
             ViewPager viewPager;
 
             PagerHolder(View itemView) {
@@ -101,11 +105,12 @@ public class RecyclerViewComplexSampleActivity extends AppCompatActivity {
             }
 
             void bind() {
-                viewPager.setAdapter(new SamplePagerAdapter(mContext));
+                viewPager.setAdapter(new SamplePagerAdapter(context));
             }
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
+
             DiagonalImageView image;
 
             ViewHolder(View itemView) {
@@ -113,14 +118,16 @@ public class RecyclerViewComplexSampleActivity extends AppCompatActivity {
                 image = itemView.findViewById(R.id.image);
                 image.setOnClickListener(new OnClickListener() {
                     @Override public void onClick(View v) {
-                        Log.v(DiagonalImageView.TAG, getAdapterPosition() + " clicked");
+                        Log.v("DiagonalImageView", getAdapterPosition() + " clicked");
                     }
                 });
             }
 
             void bind(int position) {
-                Picasso.with(mContext)
-                        .load("https://media.gq.com/photos/561e9f0ca7113fb922cd6151/master/pass/gq-guide-to-suits-color-2015-03.jpg")
+                Picasso.with(context)
+                        .load("https://media.gq" +
+                                ".com/photos/561e9f0ca7113fb922cd6151/master/pass/gq-guide-to" +
+                                "-suits-color-2015-03.jpg")
                         .placeholder(R.drawable.demo)
                         .error(R.drawable.demo)
                         .into(image);
@@ -135,10 +142,11 @@ public class RecyclerViewComplexSampleActivity extends AppCompatActivity {
     }
 
     static class SamplePagerAdapter extends PagerAdapter {
-        private final Context mContext;
+
+        private final Context context;
 
         SamplePagerAdapter(Context context) {
-            mContext = context;
+            this.context = context;
         }
 
         @Override public int getCount() {
@@ -150,11 +158,12 @@ public class RecyclerViewComplexSampleActivity extends AppCompatActivity {
         }
 
         @Override public Object instantiateItem(ViewGroup container, int position) {
-            ImageView imageView = new ImageView(mContext);
+            ImageView imageView = new ImageView(context);
             imageView.setScaleType(ScaleType.CENTER_CROP);
 
-            Picasso.with(mContext)
-                    .load("https://www.thefashionisto.com/wp-content/uploads/ama/2011/1/dknyspringcampaign1.jpg")
+            Picasso.with(context)
+                    .load("https://www.thefashionisto" +
+                            ".com/wp-content/uploads/ama/2011/1/dknyspringcampaign1.jpg")
                     .placeholder(R.drawable.demo)
                     .error(R.drawable.demo)
                     .into(imageView);
@@ -169,17 +178,21 @@ public class RecyclerViewComplexSampleActivity extends AppCompatActivity {
     }
 
     static class OverlapItemDecoration extends RecyclerView.ItemDecoration {
-        private int mOverlap;
+
+        private int overlap;
 
         OverlapItemDecoration(int overlap) {
-            mOverlap = overlap;
+            this.overlap = overlap;
         }
 
         @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        public void getItemOffsets(Rect outRect,
+                View view,
+                RecyclerView parent,
+                RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
             if (parent.getChildAdapterPosition(view) > 1) {
-                outRect.top = mOverlap;
+                outRect.top = overlap;
             }
         }
     }

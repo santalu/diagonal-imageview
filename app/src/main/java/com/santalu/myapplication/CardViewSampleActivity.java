@@ -36,14 +36,15 @@ public class CardViewSampleActivity extends AppCompatActivity {
     }
 
     static class SampleAdapter extends Adapter<SampleAdapter.ViewHolder> {
-        private final LayoutInflater mInflater;
+
+        private final LayoutInflater inflater;
 
         SampleAdapter(Context context) {
-            mInflater = LayoutInflater.from(context);
+            inflater = LayoutInflater.from(context);
         }
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ViewHolder(mInflater.inflate(R.layout.item_card_view, parent, false));
+            return new ViewHolder(inflater.inflate(R.layout.item_card_view, parent, false));
         }
 
         @Override public void onBindViewHolder(ViewHolder holder, int position) {
@@ -55,6 +56,7 @@ public class CardViewSampleActivity extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
+
             ViewHolder(View itemView) {
                 super(itemView);
             }

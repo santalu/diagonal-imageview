@@ -35,7 +35,7 @@ import java.lang.annotation.RetentionPolicy;
 
 public class DiagonalImageView extends AppCompatImageView {
 
-    public static final String TAG = DiagonalImageView.class.getSimpleName();
+    private static final String TAG = DiagonalImageView.class.getSimpleName();
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({ NONE, LEFT, RIGHT, TOP, BOTTOM })
