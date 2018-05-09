@@ -13,14 +13,15 @@ import android.support.v7.widget.Toolbar;
 
 public class CollapsingToolbarSampleActivity extends AppCompatActivity {
 
-    public static void start(Context context) {
-        context.startActivity(new Intent(context, CollapsingToolbarSampleActivity.class));
-    }
+  public static void start(Context context) {
+    context.startActivity(new Intent(context, CollapsingToolbarSampleActivity.class));
+  }
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_collapsing_toolbar);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-    }
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_collapsing_toolbar);
+    Toolbar toolbar = findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+  }
 }

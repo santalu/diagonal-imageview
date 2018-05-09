@@ -5,45 +5,45 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+  <include layout="@layout/toolbar"/>
 
-    <LinearLayout
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:padding="16dp">
+
+    <Button
+        android:id="@+id/sample_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:text="@string/sample_list"/>
 
-        <Button
-            android:id="@+id/sample_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sample_list"/>
+    <Button
+        android:id="@+id/sample_list_complex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sample_list_complex"/>
 
-        <Button
-            android:id="@+id/sample_list_complex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sample_list_complex"/>
+    <Button
+        android:id="@+id/sample_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sample_card"/>
 
-        <Button
-            android:id="@+id/sample_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sample_card"/>
+    <Button
+        android:id="@+id/sample_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sample_grid"/>
 
-        <Button
-            android:id="@+id/sample_grid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sample_grid"/>
+    <Button
+        android:id="@+id/sample_collapsing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sample_collapsing"/>
 
-        <Button
-            android:id="@+id/sample_collapsing"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sample_collapsing"/>
-
-    </LinearLayout>
+  </LinearLayout>
 
 </LinearLayout>
