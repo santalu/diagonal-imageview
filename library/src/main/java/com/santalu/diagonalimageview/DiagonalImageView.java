@@ -1,5 +1,6 @@
 package com.santalu.diagonalimageview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -68,7 +69,6 @@ public class DiagonalImageView extends AppCompatImageView {
       return;
     }
 
-    // clipPath is first support from api level 18
     // refer to this https://developer.android.com/guide/topics/graphics/hardware-accel.html#unsupported
     if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR2) {
       setLayerType(LAYER_TYPE_HARDWARE, null);
@@ -140,6 +140,15 @@ public class DiagonalImageView extends AppCompatImageView {
     postInvalidate();
   }
 
+  public void setOverlap(int overlap) {
+    if (this.overlap != overlap) {
+      clipPath.reset();
+      borderPath.reset();
+    }
+    this.overlap = overlap;
+    postInvalidate();
+  }
+
   @Override
   protected void onDraw(Canvas canvas) {
     if (clipPath.isEmpty()) {
@@ -183,6 +192,7 @@ public class DiagonalImageView extends AppCompatImageView {
     }
   }
 
+  @SuppressLint("ClickableViewAccessibility")
   @Override
   public boolean onTouchEvent(MotionEvent event) {
     if (!clickRegion.isEmpty()) {
