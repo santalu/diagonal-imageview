@@ -49,7 +49,6 @@ public class RecyclerViewComplexSampleActivity extends AppCompatActivity {
   }
 
   static class SampleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     private static final int TYPE_PAGER = 1;
     private static final int TYPE_REGULAR = 2;
 
@@ -101,7 +100,6 @@ public class RecyclerViewComplexSampleActivity extends AppCompatActivity {
     }
 
     class PagerHolder extends RecyclerView.ViewHolder {
-
       ViewPager viewPager;
 
       PagerHolder(View itemView) {
@@ -115,18 +113,12 @@ public class RecyclerViewComplexSampleActivity extends AppCompatActivity {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
       DiagonalImageView image;
 
       ViewHolder(View itemView) {
         super(itemView);
         image = itemView.findViewById(R.id.image);
-        image.setOnClickListener(new OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            Log.v("DiagonalImageView", getAdapterPosition() + " clicked");
-          }
-        });
+        image.setOnClickListener(v -> Log.v("DiagonalImageView", getAdapterPosition() + " clicked"));
       }
 
       void bind(int position) {
@@ -148,7 +140,6 @@ public class RecyclerViewComplexSampleActivity extends AppCompatActivity {
   }
 
   static class SamplePagerAdapter extends PagerAdapter {
-
     private final Context context;
 
     SamplePagerAdapter(Context context) {
@@ -189,7 +180,6 @@ public class RecyclerViewComplexSampleActivity extends AppCompatActivity {
   }
 
   static class OverlapItemDecoration extends RecyclerView.ItemDecoration {
-
     private int overlap;
 
     OverlapItemDecoration(int overlap) {

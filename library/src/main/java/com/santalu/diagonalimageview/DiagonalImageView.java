@@ -93,28 +93,14 @@ public class DiagonalImageView extends AppCompatImageView {
     }
   }
 
-  public void set(@Position int position, @Direction int direction) {
-    if (this.position != position || this.direction != direction) {
-      clipPath.reset();
-      borderPath.reset();
-    }
-    this.position = position;
-    this.direction = direction;
-    postInvalidate();
-  }
-
   @Position
   public int getPosition() {
     return position;
   }
 
-  public void setPosition(@Position int position) {
-    if (this.position != position) {
-      clipPath.reset();
-      borderPath.reset();
-    }
+  public DiagonalImageView setPosition(@Position int position) {
     this.position = position;
-    postInvalidate();
+    return this;
   }
 
   @Direction
@@ -122,31 +108,27 @@ public class DiagonalImageView extends AppCompatImageView {
     return direction;
   }
 
-  public void setDirection(@Direction int direction) {
-    if (this.direction != direction) {
-      clipPath.reset();
-      borderPath.reset();
-    }
+  public DiagonalImageView setDirection(@Direction int direction) {
     this.direction = direction;
-    postInvalidate();
+    return this;
+  }
+
+  public int getOverlap() {
+    return overlap;
+  }
+
+  public DiagonalImageView setOverlap(int overlap) {
+    this.overlap = overlap;
+    return this;
   }
 
   public boolean isBorderEnabled() {
     return borderEnabled;
   }
 
-  public void setBorderEnabled(boolean enabled) {
+  public DiagonalImageView setBorderEnabled(boolean enabled) {
     borderEnabled = enabled;
-    postInvalidate();
-  }
-
-  public void setOverlap(int overlap) {
-    if (this.overlap != overlap) {
-      clipPath.reset();
-      borderPath.reset();
-    }
-    this.overlap = overlap;
-    postInvalidate();
+    return this;
   }
 
   @Override
@@ -179,17 +161,7 @@ public class DiagonalImageView extends AppCompatImageView {
     if (!changed) {
       return;
     }
-
-    if (clipPath.isEmpty()) {
-      int width = getMeasuredWidth();
-      int height = getMeasuredHeight();
-
-      if (width <= 0 || height <= 0) {
-        return;
-      }
-
-      setClipPath(width, height);
-    }
+    measure();
   }
 
   @SuppressLint("ClickableViewAccessibility")
@@ -207,6 +179,23 @@ public class DiagonalImageView extends AppCompatImageView {
       }
     }
     return super.onTouchEvent(event);
+  }
+
+  @Override
+  public void invalidate() {
+    super.invalidate();
+    measure();
+  }
+
+  private void measure() {
+    int width = getMeasuredWidth();
+    int height = getMeasuredHeight();
+
+    if (width <= 0 || height <= 0) {
+      return;
+    }
+
+    setClipPath(width, height);
   }
 
   private void setClipPath(final int width, final int height) {

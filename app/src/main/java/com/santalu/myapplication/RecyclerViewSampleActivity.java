@@ -43,7 +43,6 @@ public class RecyclerViewSampleActivity extends AppCompatActivity {
   }
 
   static class SampleAdapter extends RecyclerView.Adapter<SampleAdapter.ViewHolder> {
-
     private final LayoutInflater inflater;
 
     SampleAdapter(Context context) {
@@ -68,18 +67,12 @@ public class RecyclerViewSampleActivity extends AppCompatActivity {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
       DiagonalImageView image;
 
       ViewHolder(View itemView) {
         super(itemView);
         image = itemView.findViewById(R.id.image);
-        image.setOnClickListener(new OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            Log.v("cmd", getAdapterPosition() + " clicked");
-          }
-        });
+        image.setOnClickListener(v -> Log.v("cmd", getAdapterPosition() + " clicked"));
       }
 
       void bind(int position) {
@@ -93,7 +86,6 @@ public class RecyclerViewSampleActivity extends AppCompatActivity {
   }
 
   static class OverlapItemDecoration extends RecyclerView.ItemDecoration {
-
     private int overlap;
 
     OverlapItemDecoration(int overlap) {

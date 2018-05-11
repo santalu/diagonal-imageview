@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import com.santalu.diagonalimageview.DiagonalImageView;
 
 /**
  * Created by santalu on 20/07/2017.
@@ -23,5 +24,12 @@ public class CollapsingToolbarSampleActivity extends AppCompatActivity {
     setContentView(R.layout.activity_collapsing_toolbar);
     Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
+    DiagonalImageView imageView = findViewById(R.id.image);
+
+    imageView.setOnClickListener(v ->
+        imageView.setPosition(DiagonalImageView.BOTTOM)
+            .setDirection(DiagonalImageView.RIGHT)
+            .setOverlap(300)
+            .invalidate());
   }
 }

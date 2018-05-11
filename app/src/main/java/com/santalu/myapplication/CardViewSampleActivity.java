@@ -38,7 +38,6 @@ public class CardViewSampleActivity extends AppCompatActivity {
   }
 
   static class SampleAdapter extends Adapter<SampleAdapter.ViewHolder> {
-
     private final LayoutInflater inflater;
 
     SampleAdapter(Context context) {
@@ -53,7 +52,6 @@ public class CardViewSampleActivity extends AppCompatActivity {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
     }
 
     @Override
