@@ -71,6 +71,7 @@ dependencies {
 ## Notes
 
 * Set position NONE to disable masking
+* After changing attributes call invalidate() or postInvalidate() to immediately apply changes
 
 ## License
 ```
