@@ -29,7 +29,7 @@ allprojects {
 ```
 ```
 dependencies {
-  compile 'com.github.santalu:diagonal-imageview:1.0.4'
+  implementation 'com.github.santalu:diagonal-imageview:1.0.5'
 }
 ```
 
