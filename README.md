@@ -29,7 +29,7 @@ allprojects {
 ```
 ```
 dependencies {
-  compile 'com.github.santalu:diagonal-imageview:1.0.4'
+  implementation 'com.github.santalu:diagonal-imageview:1.0.5'
 }
 ```
 
@@ -70,7 +70,8 @@ dependencies {
 
 ## Notes
 
-* Set position NONE to disable masking
+* Set position `NONE` to disable masking
+* After changing attributes call `invalidate()` or `postInvalidate()` to immediately apply changes
 
 ## License
 ```
