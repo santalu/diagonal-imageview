@@ -1,49 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
 
-  <include layout="@layout/toolbar"/>
-
-  <LinearLayout
+  <Button
+      android:id="@+id/listSample"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:gravity="center"
-      android:orientation="vertical"
-      android:padding="16dp">
+      android:layout_height="wrap_content"
+      android:text="@string/sample_list"/>
 
-    <Button
-        android:id="@+id/sample_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/sample_list"/>
+  <Button
+      android:id="@+id/cardListSample"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/sample_card_list"/>
 
-    <Button
-        android:id="@+id/sample_list_complex"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/sample_list_complex"/>
-
-    <Button
-        android:id="@+id/sample_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/sample_card"/>
-
-    <Button
-        android:id="@+id/sample_grid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/sample_grid"/>
-
-    <Button
-        android:id="@+id/sample_collapsing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/sample_collapsing"/>
-
-  </LinearLayout>
+  <Button
+      android:id="@+id/gridSample"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/sample_grid"/>
 
 </LinearLayout>

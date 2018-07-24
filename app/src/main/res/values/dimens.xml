@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <dimen name="image_height">182dp</dimen>
-  <dimen name="collapsing_image_height">240dp</dimen>
-  <dimen name="grid_image_size">120dp</dimen>
+  <dimen name="list_item_height">182dp</dimen>
+  <dimen name="grid_item_height">120dp</dimen>
   <dimen name="grid_item_margin">4dp</dimen>
   <dimen name="overlap_size">56dp</dimen>
-  <dimen name="collapsing_overlap_size">96dp</dimen>
-  <dimen name="line_size">8dp</dimen>
-  <dimen name="indicator_padding">8dp</dimen>
+  <dimen name="border_size">8dp</dimen>
   <dimen name="card_elevation">4dp</dimen>
-  <dimen name="fab_size">72dp</dimen>
-  <dimen name="pager_height">200dp</dimen>
 
 </resources>
