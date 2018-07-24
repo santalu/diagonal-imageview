@@ -8,12 +8,9 @@ A simple imageview which allows you to create diagonal cut views easily
 
 <table >
   <tr>
-    <td align="left"><img src="https://github.com/santalu/diagonal-imageview/blob/master/screens/rv.png"/></td>
-    <td align="right"><img src="https://github.com/santalu/diagonal-imageview/blob/master/screens/cv.png"/></td>
-  </tr>
-  <tr>
-    <td align="left"><img src="https://github.com/santalu/diagonal-imageview/blob/master/screens/gl.png"/></td>
-    <td align="right"><img src="https://github.com/santalu/diagonal-imageview/blob/master/screens/ct.png"/></td>
+    <td align="left"><img src="https://github.com/santalu/diagonal-imageview/blob/master/media/rv.png"/></td>
+    <td align="right"><img src="https://github.com/santalu/diagonal-imageview/blob/master/media/cv.png"/></td>
+    <td align="left"><img src="https://github.com/santalu/diagonal-imageview/blob/master/media/gl.png"/></td>
   </tr>
 </table>
 
@@ -29,7 +26,7 @@ allprojects {
 ```
 ```
 dependencies {
-  implementation 'com.github.santalu:diagonal-imageview:1.0.5'
+  implementation 'com.github.santalu:diagonal-imageview:1.0.6'
 }
 ```
 
@@ -41,11 +38,12 @@ dependencies {
     android:layout_height="120dp"
     android:scaleType="centerCrop"
     android:src="@drawable/demo"
-    app:di_borderColor="#FF5722"
-    app:di_borderEnabled="false"
-    app:di_direction="bottom"
-    app:di_overlap="56dp"
-    app:di_position="right"/>
+    app:di_borderColor="@color/colorAccent"
+    app:di_borderEnabled="true"
+    app:di_borderSize="@dimen/border_size"
+    app:di_direction="right"
+    app:di_overlap="@dimen/overlap_size"
+    app:di_position="top"/>
 ```
 
 ## Attributes
