@@ -8,7 +8,7 @@
     app:cardElevation="@dimen/card_elevation"
     app:cardUseCompatPadding="true">
 
-  <com.santalu.diagonalimageview.DiagonalImageView
+  <com.santalu.widget.DiagonalImageView
       android:layout_width="@dimen/grid_item_height"
       android:layout_height="@dimen/grid_item_height"
       android:scaleType="centerCrop"

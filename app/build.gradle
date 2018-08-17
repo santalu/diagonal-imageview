@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-  compileSdkVersion 27
+  compileSdkVersion rootProject.compile_sdk_version
 
   defaultConfig {
-    applicationId "com.santalu.myapplication"
-    minSdkVersion 15
-    targetSdkVersion 27
+    applicationId "com.santalu.sample"
+    minSdkVersion rootProject.min_sdk_version
+    targetSdkVersion rootProject.target_sdk_version
     versionCode 1
     versionName "1.0"
   }
@@ -28,11 +28,11 @@ android {
 
 dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
-  implementation project(':library')
+  implementation project(':widget')
 
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-  implementation "com.android.support:appcompat-v7:$supportlibrary_version"
-  implementation "com.android.support:recyclerview-v7:$supportlibrary_version"
-  implementation "com.android.support:cardview-v7:$supportlibrary_version"
-  implementation "com.android.support:gridlayout-v7:$supportlibrary_version"
+  implementation "com.android.support:appcompat-v7:$support_version"
+  implementation "com.android.support:recyclerview-v7:$support_version"
+  implementation "com.android.support:cardview-v7:$support_version"
+  implementation "com.android.support:gridlayout-v7:$support_version"
 }

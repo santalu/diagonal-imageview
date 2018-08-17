@@ -8,9 +8,9 @@ A simple imageview which allows you to create diagonal cut views easily
 
 <table >
   <tr>
-    <td align="left"><img src="https://github.com/santalu/diagonal-imageview/blob/master/media/rv.png"/></td>
-    <td align="right"><img src="https://github.com/santalu/diagonal-imageview/blob/master/media/cv.png"/></td>
-    <td align="left"><img src="https://github.com/santalu/diagonal-imageview/blob/master/media/gl.png"/></td>
+    <td align="left"><img src="https://github.com/santalu/diagonal-imageview/blob/master/media/rv.webp"/></td>
+    <td align="right"><img src="https://github.com/santalu/diagonal-imageview/blob/master/media/cv.webp"/></td>
+    <td align="left"><img src="https://github.com/santalu/diagonal-imageview/blob/master/media/gl.webp"/></td>
   </tr>
 </table>
 
@@ -26,13 +26,13 @@ allprojects {
 ```
 ```
 dependencies {
-  implementation 'com.github.santalu:diagonal-imageview:1.0.6'
+  implementation 'com.github.santalu:diagonal-imageview:1.0.7'
 }
 ```
 
 ### XML
 ```xml
-<com.santalu.diagonalimageview.DiagonalImageView
+<com.santalu.widget.DiagonalImageView
     android:id="@+id/image"
     android:layout_width="120dp"
     android:layout_height="120dp"

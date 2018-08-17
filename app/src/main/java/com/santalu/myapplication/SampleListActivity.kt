@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView.ItemDecoration
 import android.support.v7.widget.RecyclerView.State
 import android.view.View
 import android.view.ViewGroup
-import com.santalu.diagonalimageview.DiagonalImageView
+import com.santalu.widget.DiagonalImageView
 import kotlinx.android.synthetic.main.activity_list.recyclerView
 import kotlinx.android.synthetic.main.item_list.view.image
 
