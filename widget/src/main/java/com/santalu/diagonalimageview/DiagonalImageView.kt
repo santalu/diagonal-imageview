@@ -1,4 +1,4 @@
-package com.santalu.widget
+package com.santalu.diagonalimageview
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -49,24 +49,28 @@ class DiagonalImageView : AppCompatImageView {
   private fun init(context: Context, attrs: AttributeSet?) {
     attrs?.let {
       val a = context.obtainStyledAttributes(it, R.styleable.DiagonalImageView)
-      position = a.getInt(R.styleable.DiagonalImageView_di_position, NONE)
-      direction = a.getInt(R.styleable.DiagonalImageView_di_direction, NONE)
-      overlap = a.getDimensionPixelSize(R.styleable.DiagonalImageView_di_overlap, 0).toFloat()
-      borderEnabled = a.getBoolean(R.styleable.DiagonalImageView_di_borderEnabled, false)
-      borderSize = a.getDimensionPixelSize(R.styleable.DiagonalImageView_di_borderSize, 0).toFloat()
-      borderColor = a.getColor(R.styleable.DiagonalImageView_di_borderColor, Color.BLACK)
 
-      borderPaint.style = Style.STROKE
-      borderPaint.color = borderColor
-      borderPaint.strokeWidth = borderSize
+      with(a) {
+        position = getInt(R.styleable.DiagonalImageView_di_position, NONE)
+        direction = getInt(R.styleable.DiagonalImageView_di_direction, NONE)
+        overlap = getDimensionPixelSize(R.styleable.DiagonalImageView_di_overlap, 0).toFloat()
+        borderEnabled = getBoolean(R.styleable.DiagonalImageView_di_borderEnabled, false)
+        borderSize = getDimensionPixelSize(R.styleable.DiagonalImageView_di_borderSize, 0).toFloat()
+        borderColor = getColor(R.styleable.DiagonalImageView_di_borderColor, Color.BLACK)
+        recycle()
+      }
+
+      with(borderPaint) {
+        style = Style.STROKE
+        color = borderColor
+        strokeWidth = borderSize
+      }
 
       // refer this https://developer.android.com/guide/topics/graphics/hardware-accel.html#unsupported
       setLayerType(
         if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR2) LAYER_TYPE_HARDWARE else LAYER_TYPE_SOFTWARE,
         null
       )
-
-      a?.recycle()
     }
   }
 
@@ -129,103 +133,138 @@ class DiagonalImageView : AppCompatImageView {
 
     clipPath.reset()
     borderPath.reset()
+
     when (position) {
       TOP -> {
         if (direction == LEFT) {
-          clipPath.moveTo(0f, 0f)
-          clipPath.lineTo(width, overlap)
-          clipPath.lineTo(width, height)
-          clipPath.lineTo(0f, height)
+          with(clipPath) {
+            moveTo(0f, 0f)
+            lineTo(width, overlap)
+            lineTo(width, height)
+            lineTo(0f, height)
+          }
 
           if (borderEnabled) {
-            borderPath.moveTo(0f, 0f)
-            borderPath.lineTo(width, overlap)
+            with(borderPath) {
+              moveTo(0f, 0f)
+              lineTo(width, overlap)
+            }
           }
         } else {
-          clipPath.moveTo(0f, overlap)
-          clipPath.lineTo(width, 0f)
-          clipPath.lineTo(width, height)
-          clipPath.lineTo(0f, height)
+          with(clipPath) {
+            moveTo(0f, overlap)
+            lineTo(width, 0f)
+            lineTo(width, height)
+            lineTo(0f, height)
+          }
 
           if (borderEnabled) {
-            borderPath.moveTo(0f, overlap)
-            borderPath.lineTo(width, 0f)
+            with(borderPath) {
+              moveTo(0f, overlap)
+              lineTo(width, 0f)
+            }
           }
         }
       }
       BOTTOM -> {
         if (direction == LEFT) {
-          clipPath.moveTo(0f, 0f)
-          clipPath.lineTo(width, 0f)
-          clipPath.lineTo(width, height - overlap)
-          clipPath.lineTo(0f, height)
+          with(clipPath) {
+            moveTo(0f, 0f)
+            lineTo(width, 0f)
+            lineTo(width, height - overlap)
+            lineTo(0f, height)
+          }
 
           if (borderEnabled) {
-            borderPath.moveTo(0f, height)
-            borderPath.lineTo(width, height - overlap)
+            with(borderPath) {
+              moveTo(0f, height)
+              lineTo(width, height - overlap)
+            }
           }
         } else {
-          clipPath.moveTo(0f, 0f)
-          clipPath.lineTo(width, 0f)
-          clipPath.lineTo(width, height)
-          clipPath.lineTo(0f, height - overlap)
+          with(clipPath) {
+            moveTo(0f, 0f)
+            lineTo(width, 0f)
+            lineTo(width, height)
+            lineTo(0f, height - overlap)
+          }
 
           if (borderEnabled) {
-            borderPath.moveTo(0f, height - overlap)
-            borderPath.lineTo(width, height)
+            with(borderPath) {
+              moveTo(0f, height - overlap)
+              lineTo(width, height)
+            }
           }
         }
       }
       LEFT -> {
         if (direction == TOP) {
-          clipPath.moveTo(0f, 0f)
-          clipPath.lineTo(width, 0f)
-          clipPath.lineTo(width, height)
-          clipPath.lineTo(overlap, height)
+          with(clipPath) {
+            moveTo(0f, 0f)
+            lineTo(width, 0f)
+            lineTo(width, height)
+            lineTo(overlap, height)
+          }
 
           if (borderEnabled) {
-            borderPath.moveTo(0f, 0f)
-            borderPath.lineTo(overlap, height)
+            with(borderPath) {
+              moveTo(0f, 0f)
+              lineTo(overlap, height)
+            }
           }
         } else {
-          clipPath.moveTo(overlap, 0f)
-          clipPath.lineTo(width, 0f)
-          clipPath.lineTo(width, height)
-          clipPath.lineTo(0f, height)
+          with(clipPath) {
+            moveTo(overlap, 0f)
+            lineTo(width, 0f)
+            lineTo(width, height)
+            lineTo(0f, height)
+          }
 
           if (borderEnabled) {
-            borderPath.moveTo(overlap, 0f)
-            borderPath.lineTo(0f, height)
+            with(borderPath) {
+              moveTo(overlap, 0f)
+              lineTo(0f, height)
+            }
           }
         }
       }
       RIGHT -> {
         if (direction == TOP) {
-          clipPath.moveTo(0f, 0f)
-          clipPath.lineTo(width, 0f)
-          clipPath.lineTo(width - overlap, height)
-          clipPath.lineTo(0f, height)
+          with(clipPath) {
+            moveTo(0f, 0f)
+            lineTo(width, 0f)
+            lineTo(width - overlap, height)
+            lineTo(0f, height)
+          }
 
           if (borderEnabled) {
-            borderPath.moveTo(width, 0f)
-            borderPath.lineTo(width - overlap, height)
+            with(borderPath) {
+              moveTo(width, 0f)
+              lineTo(width - overlap, height)
+            }
           }
         } else {
-          clipPath.moveTo(0f, 0f)
-          clipPath.lineTo(width - overlap, 0f)
-          clipPath.lineTo(width, height)
-          clipPath.lineTo(0f, height)
+          with(clipPath) {
+            moveTo(0f, 0f)
+            lineTo(width - overlap, 0f)
+            lineTo(width, height)
+            lineTo(0f, height)
+          }
 
           if (borderEnabled) {
-            borderPath.moveTo(width - overlap, 0f)
-            borderPath.lineTo(width, height)
+            with(borderPath) {
+              moveTo(width - overlap, 0f)
+              lineTo(width, height)
+            }
           }
         }
       }
       else -> return
     }
+
     clipPath.close()
     borderPath.close()
+
     setClickRegion()
   }
 

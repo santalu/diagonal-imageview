@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView.ItemDecoration
 import android.support.v7.widget.RecyclerView.State
 import android.view.View
 import android.view.ViewGroup
-import com.santalu.widget.DiagonalImageView
+import com.santalu.diagonalimageview.DiagonalImageView
 import kotlinx.android.synthetic.main.activity_list.recyclerView
 import kotlinx.android.synthetic.main.item_list.view.image
 
@@ -24,10 +24,12 @@ class SampleListActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_list)
 
-    val overlap = resources.getDimensionPixelSize(R.dimen.overlap_size)
-    recyclerView.addItemDecoration(OverlapItemDecoration(-overlap))
-    recyclerView.setHasFixedSize(true)
-    recyclerView.adapter = SampleAdapter()
+    with(recyclerView) {
+      val overlap = resources.getDimensionPixelSize(R.dimen.overlap_size)
+      addItemDecoration(OverlapItemDecoration(-overlap))
+      setHasFixedSize(true)
+      adapter = SampleAdapter()
+    }
   }
 
   class SampleAdapter : RecyclerView.Adapter<SampleAdapter.SampleViewHolder>() {
@@ -42,10 +44,9 @@ class SampleListActivity : AppCompatActivity() {
     }
 
     override fun onBindViewHolder(holder: SampleViewHolder, position: Int) {
-      holder.itemView.image.position =
-          if (position == 0) DiagonalImageView.NONE else DiagonalImageView.TOP
-      holder.itemView.setOnClickListener {
-        it.context.toast("position $position clicked")
+      with(holder.itemView) {
+        image.position = if (position == 0) DiagonalImageView.NONE else DiagonalImageView.TOP
+        setOnClickListener { context.toast("position $position clicked") }
       }
     }
 
@@ -54,12 +55,10 @@ class SampleListActivity : AppCompatActivity() {
 
   class OverlapItemDecoration(private val overlap: Int) : ItemDecoration() {
 
-    override fun getItemOffsets(outRect: Rect?, view: View?, parent: RecyclerView?, state: State?) {
+    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: State) {
       super.getItemOffsets(outRect, view, parent, state)
-      parent?.let {
-        if (it.getChildAdapterPosition(view) > 0) {
-          outRect?.top = overlap
-        }
+      if (parent.getChildAdapterPosition(view) > 0) {
+        outRect.top = overlap
       }
     }
   }
@@ -67,8 +66,10 @@ class SampleListActivity : AppCompatActivity() {
   companion object {
 
     fun start(activity: Activity) {
-      val intent = Intent(activity, SampleListActivity::class.java)
-      activity.startActivity(intent)
+      with(activity) {
+        intent = Intent(this, SampleListActivity::class.java)
+        startActivity(intent)
+      }
     }
   }
 }

@@ -24,8 +24,10 @@ class SampleGridActivity : AppCompatActivity() {
   companion object {
 
     fun start(activity: Activity) {
-      val intent = Intent(activity, SampleGridActivity::class.java)
-      activity.startActivity(intent)
+      with(activity) {
+        intent = Intent(this, SampleGridActivity::class.java)
+        startActivity(intent)
+      }
     }
   }
 }

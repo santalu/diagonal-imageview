@@ -2,13 +2,14 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-  compileSdkVersion rootProject.compile_sdk_version
+  compileSdkVersion compileSdk_version
+  buildToolsVersion buildTools_version
 
   defaultConfig {
-    minSdkVersion rootProject.min_sdk_version
-    targetSdkVersion rootProject.target_sdk_version
-    versionCode 8
-    versionName "1.0.7"
+    minSdkVersion minSdk_version
+    targetSdkVersion targetSdk_version
+    versionCode 9
+    versionName "1.0.8"
   }
 
   buildTypes {

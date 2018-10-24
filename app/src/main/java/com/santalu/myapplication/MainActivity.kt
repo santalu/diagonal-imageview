@@ -12,16 +12,8 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    listSample.setOnClickListener {
-      SampleListActivity.start(this)
-    }
-
-    cardListSample.setOnClickListener {
-      SampleCardListActivity.start(this)
-    }
-
-    gridSample.setOnClickListener {
-      SampleGridActivity.start(this)
-    }
+    listSample.setOnClickListener { SampleListActivity.start(this) }
+    cardListSample.setOnClickListener { SampleCardListActivity.start(this) }
+    gridSample.setOnClickListener { SampleGridActivity.start(this) }
   }
 }

@@ -19,8 +19,10 @@ class SampleCardListActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_list)
 
-    recyclerView.setHasFixedSize(true)
-    recyclerView.adapter = SampleAdapter()
+    with(recyclerView) {
+      setHasFixedSize(true)
+      adapter = SampleAdapter()
+    }
   }
 
   class SampleAdapter : RecyclerView.Adapter<SampleAdapter.SampleViewHolder>() {
@@ -35,8 +37,8 @@ class SampleCardListActivity : AppCompatActivity() {
     }
 
     override fun onBindViewHolder(holder: SampleViewHolder, position: Int) {
-      holder.itemView.setOnClickListener {
-        it.context.toast("position $position clicked")
+      with(holder.itemView) {
+        setOnClickListener { context.toast("position $position clicked") }
       }
     }
 
@@ -46,8 +48,10 @@ class SampleCardListActivity : AppCompatActivity() {
   companion object {
 
     fun start(activity: Activity) {
-      val intent = Intent(activity, SampleCardListActivity::class.java)
-      activity.startActivity(intent)
+      with(activity) {
+        intent = Intent(this, SampleCardListActivity::class.java)
+        startActivity(intent)
+      }
     }
   }
 
