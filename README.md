@@ -59,7 +59,7 @@ dependencies {
 
 ## Position & Direction Relation
 
-| Position        | Description           | 
+| Position        | Direction           | 
 | ------------- |:-------------:|
 | TOP      | LEFT /  RIGHT | 
 | BOTTOM     | LEFT /  RIGHT    | 
