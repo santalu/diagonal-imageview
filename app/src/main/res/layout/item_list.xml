@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.santalu.widget.DiagonalImageView
+<com.santalu.diagonalimageview.DiagonalImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/image"

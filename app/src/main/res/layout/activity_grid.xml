@@ -9,7 +9,7 @@
     app:rowCount="4"
     app:useDefaultMargins="false">
 
-  <com.santalu.widget.DiagonalImageView
+  <com.santalu.diagonalimageview.DiagonalImageView
       android:layout_width="0dp"
       android:layout_height="@dimen/grid_item_height"
       android:layout_margin="@dimen/grid_item_margin"
@@ -23,7 +23,7 @@
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
-  <com.santalu.widget.DiagonalImageView
+  <com.santalu.diagonalimageview.DiagonalImageView
       android:layout_width="0dp"
       android:layout_height="@dimen/grid_item_height"
       android:layout_margin="@dimen/grid_item_margin"
@@ -37,7 +37,7 @@
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
-  <com.santalu.widget.DiagonalImageView
+  <com.santalu.diagonalimageview.DiagonalImageView
       android:layout_width="0dp"
       android:layout_height="@dimen/grid_item_height"
       android:layout_margin="@dimen/grid_item_margin"
@@ -51,7 +51,7 @@
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
-  <com.santalu.widget.DiagonalImageView
+  <com.santalu.diagonalimageview.DiagonalImageView
       android:layout_width="0dp"
       android:layout_height="@dimen/grid_item_height"
       android:layout_margin="@dimen/grid_item_margin"
@@ -65,7 +65,7 @@
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
-  <com.santalu.widget.DiagonalImageView
+  <com.santalu.diagonalimageview.DiagonalImageView
       android:layout_width="0dp"
       android:layout_height="@dimen/grid_item_height"
       android:layout_margin="@dimen/grid_item_margin"
@@ -79,7 +79,7 @@
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
-  <com.santalu.widget.DiagonalImageView
+  <com.santalu.diagonalimageview.DiagonalImageView
       android:layout_width="0dp"
       android:layout_height="@dimen/grid_item_height"
       android:layout_margin="@dimen/grid_item_margin"
@@ -93,7 +93,7 @@
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
-  <com.santalu.widget.DiagonalImageView
+  <com.santalu.diagonalimageview.DiagonalImageView
       android:layout_width="0dp"
       android:layout_height="@dimen/grid_item_height"
       android:layout_margin="@dimen/grid_item_margin"
@@ -107,7 +107,7 @@
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
-  <com.santalu.widget.DiagonalImageView
+  <com.santalu.diagonalimageview.DiagonalImageView
       android:layout_width="0dp"
       android:layout_height="@dimen/grid_item_height"
       android:layout_margin="@dimen/grid_item_margin"

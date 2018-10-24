@@ -1,4 +1,4 @@
-package com.santalu.widget
+package com.santalu.diagonalimageview
 
 import android.annotation.SuppressLint
 import android.content.Context

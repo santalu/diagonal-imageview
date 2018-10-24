@@ -25,7 +25,7 @@ class SampleGridActivity : AppCompatActivity() {
 
     fun start(activity: Activity) {
       with(activity) {
-        intent = Intent(activity, SampleGridActivity::class.java)
+        intent = Intent(this, SampleGridActivity::class.java)
         startActivity(intent)
       }
     }

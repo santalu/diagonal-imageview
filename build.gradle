@@ -3,12 +3,13 @@
 buildscript {
 
   ext {
-    compile_sdk_version = 28
-    target_sdk_version = 28
-    min_sdk_version = 15
-    gradle_version = "3.2.0"
+    compileSdk_version = 28
+    targetSdk_version = 28
+    minSdk_version = 15
+    buildTools_version = '28.0.3'
+    gradle_version = '3.2.1'
     kotlin_version = '1.2.71'
-    support_version = "28.0.0"
+    support_version = '28.0.0'
   }
 
   repositories {

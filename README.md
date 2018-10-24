@@ -26,13 +26,13 @@ allprojects {
 ```
 ```
 dependencies {
-  implementation 'com.github.santalu:diagonal-imageview:1.0.7'
+  implementation 'com.github.santalu:diagonal-imageview:1.0.8'
 }
 ```
 
 ### XML
 ```xml
-<com.santalu.widget.DiagonalImageView
+<com.santalu.diagonalimageview.DiagonalImageView
     android:id="@+id/image"
     android:layout_width="120dp"
     android:layout_height="120dp"
