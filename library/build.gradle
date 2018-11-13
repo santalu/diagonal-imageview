@@ -8,8 +8,8 @@ android {
   defaultConfig {
     minSdkVersion minSdk_version
     targetSdkVersion targetSdk_version
-    versionCode 9
-    versionName "1.0.8"
+    versionCode 10
+    versionName "1.0.9"
   }
 
   buildTypes {
@@ -28,5 +28,5 @@ android {
 dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-  implementation "com.android.support:appcompat-v7:$support_version"
+  implementation "androidx.appcompat:appcompat:$support_version"
 }
