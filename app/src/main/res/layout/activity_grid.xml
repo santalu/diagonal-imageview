@@ -1,4 +1,4 @@
-<android.support.v7.widget.GridLayout
+<androidx.gridlayout.widget.GridLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/gridLayout"
@@ -17,9 +17,9 @@
       android:onClick="onImageClick"
       android:scaleType="centerCrop"
       android:src="@drawable/demo"
-      app:di_direction="left"
-      app:di_overlap="@dimen/overlap_size"
-      app:di_position="bottom"
+      app:di_distance="@dimen/overlap_size"
+      app:di_end="left"
+      app:di_start="bottom"
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
@@ -31,9 +31,9 @@
       android:onClick="onImageClick"
       android:scaleType="centerCrop"
       android:src="@drawable/demo"
-      app:di_direction="left"
-      app:di_overlap="@dimen/overlap_size"
-      app:di_position="top"
+      app:di_distance="@dimen/overlap_size"
+      app:di_end="left"
+      app:di_start="top"
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
@@ -45,9 +45,9 @@
       android:onClick="onImageClick"
       android:scaleType="centerCrop"
       android:src="@drawable/demo"
-      app:di_direction="top"
-      app:di_overlap="@dimen/overlap_size"
-      app:di_position="right"
+      app:di_distance="@dimen/overlap_size"
+      app:di_end="top"
+      app:di_start="right"
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
@@ -59,9 +59,9 @@
       android:onClick="onImageClick"
       android:scaleType="centerCrop"
       android:src="@drawable/demo"
-      app:di_direction="bottom"
-      app:di_overlap="@dimen/overlap_size"
-      app:di_position="right"
+      app:di_distance="@dimen/overlap_size"
+      app:di_end="bottom"
+      app:di_start="right"
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
@@ -73,9 +73,9 @@
       android:onClick="onImageClick"
       android:scaleType="centerCrop"
       android:src="@drawable/demo"
-      app:di_direction="right"
-      app:di_overlap="@dimen/overlap_size"
-      app:di_position="bottom"
+      app:di_distance="@dimen/overlap_size"
+      app:di_end="right"
+      app:di_start="bottom"
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
@@ -87,9 +87,9 @@
       android:onClick="onImageClick"
       android:scaleType="centerCrop"
       android:src="@drawable/demo"
-      app:di_direction="right"
-      app:di_overlap="@dimen/overlap_size"
-      app:di_position="top"
+      app:di_distance="@dimen/overlap_size"
+      app:di_end="right"
+      app:di_start="top"
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
@@ -101,9 +101,9 @@
       android:onClick="onImageClick"
       android:scaleType="centerCrop"
       android:src="@drawable/demo"
-      app:di_direction="top"
-      app:di_overlap="@dimen/overlap_size"
-      app:di_position="left"
+      app:di_distance="@dimen/overlap_size"
+      app:di_end="bottom"
+      app:di_start="left"
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
@@ -115,10 +115,10 @@
       android:onClick="onImageClick"
       android:scaleType="centerCrop"
       android:src="@drawable/demo"
-      app:di_direction="bottom"
-      app:di_overlap="@dimen/overlap_size"
-      app:di_position="left"
+      app:di_distance="@dimen/overlap_size"
+      app:di_end="top"
+      app:di_start="left"
       app:layout_columnWeight="1"
       app:layout_gravity="fill_horizontal"/>
 
-</android.support.v7.widget.GridLayout>
+</androidx.gridlayout.widget.GridLayout>

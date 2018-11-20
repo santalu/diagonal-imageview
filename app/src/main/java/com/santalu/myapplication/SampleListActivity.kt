@@ -4,13 +4,16 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.ItemDecoration
-import android.support.v7.widget.RecyclerView.State
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import androidx.recyclerview.widget.RecyclerView.State
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.santalu.diagonalimageview.DiagonalImageView
+import com.santalu.myapplication.SampleListActivity.SampleAdapter.SampleViewHolder
 import kotlinx.android.synthetic.main.activity_list.recyclerView
 import kotlinx.android.synthetic.main.item_list.view.image
 
@@ -24,7 +27,7 @@ class SampleListActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_list)
 
-    with(recyclerView) {
+    recyclerView.apply {
       val overlap = resources.getDimensionPixelSize(R.dimen.overlap_size)
       addItemDecoration(OverlapItemDecoration(-overlap))
       setHasFixedSize(true)
@@ -32,7 +35,7 @@ class SampleListActivity : AppCompatActivity() {
     }
   }
 
-  class SampleAdapter : RecyclerView.Adapter<SampleAdapter.SampleViewHolder>() {
+  class SampleAdapter : Adapter<SampleViewHolder>() {
 
     override fun getItemCount(): Int {
       return 20
@@ -45,12 +48,12 @@ class SampleListActivity : AppCompatActivity() {
 
     override fun onBindViewHolder(holder: SampleViewHolder, position: Int) {
       with(holder.itemView) {
-        image.position = if (position == 0) DiagonalImageView.NONE else DiagonalImageView.TOP
+        image.start = if (position == 0) DiagonalImageView.NONE else DiagonalImageView.TOP
         setOnClickListener { context.toast("position $position clicked") }
       }
     }
 
-    class SampleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class SampleViewHolder(itemView: View) : ViewHolder(itemView)
   }
 
   class OverlapItemDecoration(private val overlap: Int) : ItemDecoration() {

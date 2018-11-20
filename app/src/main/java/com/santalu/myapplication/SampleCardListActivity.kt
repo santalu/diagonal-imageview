@@ -3,10 +3,12 @@ package com.santalu.myapplication
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.santalu.myapplication.SampleCardListActivity.SampleAdapter.SampleViewHolder
 import kotlinx.android.synthetic.main.activity_list.recyclerView
 
 /**
@@ -19,13 +21,13 @@ class SampleCardListActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_list)
 
-    with(recyclerView) {
+    recyclerView.apply {
       setHasFixedSize(true)
       adapter = SampleAdapter()
     }
   }
 
-  class SampleAdapter : RecyclerView.Adapter<SampleAdapter.SampleViewHolder>() {
+  class SampleAdapter : Adapter<SampleViewHolder>() {
 
     override fun getItemCount(): Int {
       return 20
@@ -42,7 +44,7 @@ class SampleCardListActivity : AppCompatActivity() {
       }
     }
 
-    class SampleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class SampleViewHolder(itemView: View) : ViewHolder(itemView)
   }
 
   companion object {

@@ -6,19 +6,20 @@
     android:orientation="vertical"
     android:padding="24dp">
 
-  <Button
+  <com.google.android.material.button.MaterialButton
       android:id="@+id/listSample"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:background="@color/colorPrimary"
       android:text="@string/sample_list"/>
 
-  <Button
+  <com.google.android.material.button.MaterialButton
       android:id="@+id/cardListSample"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/sample_card_list"/>
 
-  <Button
+  <com.google.android.material.button.MaterialButton
       android:id="@+id/gridSample"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
