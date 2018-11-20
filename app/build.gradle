@@ -4,7 +4,6 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
   compileSdkVersion compileSdk_version
-  buildToolsVersion buildTools_version
 
   defaultConfig {
     applicationId "com.santalu.sample"
@@ -31,8 +30,8 @@ dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
   implementation project(':library')
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-  implementation "androidx.appcompat:appcompat:$support_version"
-  implementation 'androidx.recyclerview:recyclerview:1.0.0'
-  implementation 'androidx.cardview:cardview:1.0.0'
-  implementation 'androidx.gridlayout:gridlayout:1.0.0'
+  implementation "androidx.appcompat:appcompat:$appcompat_version"
+  implementation "com.google.android.material:material:$material_version"
+  implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+  implementation "androidx.gridlayout:gridlayout:$gridlayout_version"
 }

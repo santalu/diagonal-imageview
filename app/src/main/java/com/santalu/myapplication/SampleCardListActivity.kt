@@ -21,7 +21,7 @@ class SampleCardListActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_list)
 
-    with(recyclerView) {
+    recyclerView.apply {
       setHasFixedSize(true)
       adapter = SampleAdapter()
     }

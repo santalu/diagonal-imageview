@@ -27,7 +27,7 @@ class SampleListActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_list)
 
-    with(recyclerView) {
+    recyclerView.apply {
       val overlap = resources.getDimensionPixelSize(R.dimen.overlap_size)
       addItemDecoration(OverlapItemDecoration(-overlap))
       setHasFixedSize(true)
@@ -48,7 +48,7 @@ class SampleListActivity : AppCompatActivity() {
 
     override fun onBindViewHolder(holder: SampleViewHolder, position: Int) {
       with(holder.itemView) {
-        image.position = if (position == 0) DiagonalImageView.NONE else DiagonalImageView.TOP
+        image.start = if (position == 0) DiagonalImageView.NONE else DiagonalImageView.TOP
         setOnClickListener { context.toast("position $position clicked") }
       }
     }

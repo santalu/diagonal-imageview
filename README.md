@@ -26,7 +26,7 @@ allprojects {
 ```
 ```
 dependencies {
-  implementation 'com.github.santalu:diagonal-imageview:1.0.8'
+  implementation 'com.github.santalu:diagonal-imageview:1.0.9'
 }
 ```
 
@@ -40,35 +40,26 @@ dependencies {
     android:src="@drawable/demo"
     app:di_borderColor="@color/colorAccent"
     app:di_borderEnabled="true"
-    app:di_borderSize="@dimen/border_size"
-    app:di_direction="right"
-    app:di_overlap="@dimen/overlap_size"
-    app:di_position="top"/>
+    app:di_borderSize="8dp"
+    app:di_distance="56dp"
+    app:di_end="left"
+    app:di_start="bottom"/>
 ```
 
 ## Attributes
 
-| Name        | Description           | Value  |
-| ------------- |:-------------:| -----:|
-| di_position      | position of clip path | top, right, bottom, left |
-| di_direction     | direction of clip path      | top, right, bottom, left |
-| di_overlap | size of clip path      |   dimen |
-| di_borderSize | size of border      |   dimen |
-| di_borderColor | color of border      |   color |
-| di_borderEnabled | visibility of border      |   true, false |
-
-## Position & Direction Relation
-
-| Position        | Direction           | 
-| ------------- |:-------------:|
-| TOP      | LEFT /  RIGHT | 
-| BOTTOM     | LEFT /  RIGHT    | 
-| LEFT | TOP  /  BOTTOM     |   
-| RIGHT | TOP  /  BOTTOM     |  
+| Name              | Value |
+| -------------     | -----:|
+| di_start          | top, right, bottom, left |
+| di_end            | top, right, bottom, left |
+| di_distance       | dimen |
+| di_borderSize     | dimen |
+| di_borderColor    | color |
+| di_borderEnabled  | true, false |
 
 ## Notes
 
-* Set position `NONE` to disable masking
+* Set start `NONE` to disable masking
 * After changing attributes call `invalidate()` or `postInvalidate()` to immediately apply changes
 
 ## License

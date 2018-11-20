@@ -11,9 +11,9 @@ import android.graphics.RectF
 import android.graphics.Region
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
-import androidx.appcompat.widget.AppCompatImageView
 import android.util.AttributeSet
 import android.view.MotionEvent
+import androidx.appcompat.widget.AppCompatImageView
 
 /**
  * Created by fatih.santalu on 7/24/2018.
@@ -27,9 +27,9 @@ class DiagonalImageView : AppCompatImageView {
   private val clickRegion by lazy { Region() }
   private val clickRect by lazy { RectF() }
 
-  var position = NONE
-  var direction = NONE
-  var overlap = 0f
+  var start = NONE
+  var end = NONE
+  var distance = 0f
 
   var borderEnabled = false
   var borderSize = 0f
@@ -51,47 +51,49 @@ class DiagonalImageView : AppCompatImageView {
       val a = context.obtainStyledAttributes(it, R.styleable.DiagonalImageView)
 
       with(a) {
-        position = getInt(R.styleable.DiagonalImageView_di_position, NONE)
-        direction = getInt(R.styleable.DiagonalImageView_di_direction, NONE)
-        overlap = getDimensionPixelSize(R.styleable.DiagonalImageView_di_overlap, 0).toFloat()
+        start = getInt(R.styleable.DiagonalImageView_di_start, NONE)
+        end = getInt(R.styleable.DiagonalImageView_di_end, NONE)
+        distance = getDimensionPixelSize(R.styleable.DiagonalImageView_di_distance, 0).toFloat()
         borderEnabled = getBoolean(R.styleable.DiagonalImageView_di_borderEnabled, false)
         borderSize = getDimensionPixelSize(R.styleable.DiagonalImageView_di_borderSize, 0).toFloat()
         borderColor = getColor(R.styleable.DiagonalImageView_di_borderColor, Color.BLACK)
         recycle()
       }
 
-      with(borderPaint) {
+      borderPaint.apply {
         style = Style.STROKE
         color = borderColor
         strokeWidth = borderSize
       }
 
       // refer this https://developer.android.com/guide/topics/graphics/hardware-accel.html#unsupported
-      setLayerType(
-        if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR2) LAYER_TYPE_HARDWARE else LAYER_TYPE_SOFTWARE,
-        null
-      )
+      val layerType =
+        if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR2) LAYER_TYPE_HARDWARE else LAYER_TYPE_SOFTWARE
+      setLayerType(layerType, null)
     }
   }
 
   @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent?): Boolean {
-    if (!clickRegion.isEmpty) {
-      event?.let {
-        if (it.action == MotionEvent.ACTION_DOWN) {
-          if (!clickRegion.contains(it.x.toInt(), it.y.toInt())) {
-            return false
-          }
-        }
+    event
+      ?.takeUnless { clickRegion.isEmpty }
+      ?.actionMasked
+      ?.takeIf {
+        it == MotionEvent.ACTION_DOWN &&
+            !clickRegion.contains(event.x.toInt(), event.y.toInt())
       }
-    }
+      ?.run {
+        return false
+      }
     return super.onTouchEvent(event)
   }
 
   override fun dispatchDraw(canvas: Canvas?) {
-    if (!clipPath.isEmpty) {
-      canvas?.clipPath(clipPath)
-    }
+    canvas
+      ?.takeUnless { clipPath.isEmpty }
+      ?.run {
+        clipPath(clipPath)
+      }
     super.dispatchDraw(canvas)
   }
 
@@ -100,14 +102,16 @@ class DiagonalImageView : AppCompatImageView {
       super.onDraw(canvas)
       return
     }
-    canvas?.let {
-      val saveCount = it.save()
-      it.clipPath(clipPath)
-      super.onDraw(it)
-      if (!borderPath.isEmpty) {
-        it.drawPath(borderPath, borderPaint)
-      }
-      it.restoreToCount(saveCount)
+    canvas?.apply {
+      val lastSave = save()
+      clipPath(clipPath)
+      super.onDraw(this)
+      // draw border
+      borderPath.takeUnless { it.isEmpty }
+        ?.run {
+          drawPath(this, borderPaint)
+        }
+      restoreToCount(lastSave)
     }
   }
 
@@ -134,129 +138,121 @@ class DiagonalImageView : AppCompatImageView {
     clipPath.reset()
     borderPath.reset()
 
-    when (position) {
+    when (start) {
       TOP -> {
-        if (direction == LEFT) {
-          with(clipPath) {
+        if (end == TOP || end == LEFT) {
+          clipPath.apply {
             moveTo(0f, 0f)
-            lineTo(width, overlap)
+            lineTo(width, distance)
             lineTo(width, height)
             lineTo(0f, height)
           }
 
-          if (borderEnabled) {
-            with(borderPath) {
+          borderPath.takeIf { borderEnabled }
+            ?.apply {
               moveTo(0f, 0f)
-              lineTo(width, overlap)
+              lineTo(width, distance)
             }
-          }
         } else {
-          with(clipPath) {
-            moveTo(0f, overlap)
+          clipPath.apply {
+            moveTo(0f, distance)
             lineTo(width, 0f)
             lineTo(width, height)
             lineTo(0f, height)
           }
 
-          if (borderEnabled) {
-            with(borderPath) {
-              moveTo(0f, overlap)
+          borderPath.takeIf { borderEnabled }
+            ?.apply {
+              moveTo(0f, distance)
               lineTo(width, 0f)
             }
-          }
         }
       }
       BOTTOM -> {
-        if (direction == LEFT) {
-          with(clipPath) {
+        if (end == TOP || end == LEFT) {
+          clipPath.apply {
             moveTo(0f, 0f)
             lineTo(width, 0f)
-            lineTo(width, height - overlap)
+            lineTo(width, height - distance)
             lineTo(0f, height)
           }
 
-          if (borderEnabled) {
-            with(borderPath) {
+          borderPath.takeIf { borderEnabled }
+            ?.apply {
               moveTo(0f, height)
-              lineTo(width, height - overlap)
+              lineTo(width, height - distance)
             }
-          }
         } else {
-          with(clipPath) {
+          clipPath.apply {
             moveTo(0f, 0f)
             lineTo(width, 0f)
             lineTo(width, height)
-            lineTo(0f, height - overlap)
+            lineTo(0f, height - distance)
           }
 
-          if (borderEnabled) {
-            with(borderPath) {
-              moveTo(0f, height - overlap)
+          borderPath.takeIf { borderEnabled }
+            ?.apply {
+              moveTo(0f, height - distance)
               lineTo(width, height)
             }
-          }
         }
       }
       LEFT -> {
-        if (direction == TOP) {
-          with(clipPath) {
-            moveTo(0f, 0f)
-            lineTo(width, 0f)
-            lineTo(width, height)
-            lineTo(overlap, height)
-          }
-
-          if (borderEnabled) {
-            with(borderPath) {
-              moveTo(0f, 0f)
-              lineTo(overlap, height)
-            }
-          }
-        } else {
-          with(clipPath) {
-            moveTo(overlap, 0f)
+        if (end == TOP || end == LEFT) {
+          clipPath.apply {
+            moveTo(distance, 0f)
             lineTo(width, 0f)
             lineTo(width, height)
             lineTo(0f, height)
           }
 
-          if (borderEnabled) {
-            with(borderPath) {
-              moveTo(overlap, 0f)
+          borderPath.takeIf { borderEnabled }
+            ?.apply {
+              moveTo(distance, 0f)
               lineTo(0f, height)
             }
+        } else {
+          clipPath.apply {
+            moveTo(0f, 0f)
+            lineTo(width, 0f)
+            lineTo(width, height)
+            lineTo(distance, height)
           }
+
+          borderPath.takeIf { borderEnabled }
+            ?.apply {
+              moveTo(0f, 0f)
+              lineTo(distance, height)
+            }
         }
       }
       RIGHT -> {
-        if (direction == TOP) {
-          with(clipPath) {
+        if (end == TOP || end == LEFT) {
+          clipPath.apply {
             moveTo(0f, 0f)
             lineTo(width, 0f)
-            lineTo(width - overlap, height)
+            lineTo(width - distance, height)
             lineTo(0f, height)
           }
 
-          if (borderEnabled) {
-            with(borderPath) {
+          borderPath.takeIf { borderEnabled }
+            ?.apply {
               moveTo(width, 0f)
-              lineTo(width - overlap, height)
+              lineTo(width - distance, height)
             }
-          }
         } else {
-          with(clipPath) {
+          clipPath.apply {
             moveTo(0f, 0f)
-            lineTo(width - overlap, 0f)
+            lineTo(width - distance, 0f)
             lineTo(width, height)
             lineTo(0f, height)
           }
 
-          if (borderEnabled) {
-            with(borderPath) {
-              moveTo(width - overlap, 0f)
+          borderPath.takeIf { borderEnabled }
+            ?.apply {
+              moveTo(width - distance, 0f)
               lineTo(width, height)
             }
-          }
         }
       }
       else -> return
@@ -265,28 +261,21 @@ class DiagonalImageView : AppCompatImageView {
     clipPath.close()
     borderPath.close()
 
-    setClickRegion()
-  }
-
-  private fun setClickRegion() {
     clipPath.computeBounds(clickRect, true)
-    clickRegion.setPath(
-      clipPath,
-      Region(
-        clickRect.left.toInt(),
-        clickRect.top.toInt(),
-        clickRect.right.toInt(),
-        clickRect.bottom.toInt()
-      )
+    val region = Region(
+      clickRect.left.toInt(),
+      clickRect.top.toInt(),
+      clickRect.right.toInt(),
+      clickRect.bottom.toInt()
     )
+    clickRegion.setPath(clipPath, region)
   }
 
   companion object {
-
     const val NONE = 0
-    const val TOP = 1
-    const val BOTTOM = 2
-    const val LEFT = 3
-    const val RIGHT = 4
+    const val LEFT = 1
+    const val TOP = 2
+    const val RIGHT = 3
+    const val BOTTOM = 4
   }
 }

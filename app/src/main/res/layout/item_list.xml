@@ -11,5 +11,5 @@
     app:di_borderColor="@color/colorAccent"
     app:di_borderEnabled="true"
     app:di_borderSize="@dimen/border_size"
-    app:di_direction="right"
-    app:di_overlap="@dimen/overlap_size"/>
+    app:di_distance="@dimen/overlap_size"
+    app:di_end="right"/>
