@@ -2,13 +2,13 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-  compileSdkVersion compileSdk_version
+  compileSdkVersion rootProject.compileSdkVersion
 
   defaultConfig {
-    minSdkVersion minSdk_version
-    targetSdkVersion targetSdk_version
+    minSdkVersion rootProject.minSdkVersion
+    targetSdkVersion rootProject.targetSdkVersion
     versionCode 10
-    versionName "1.0.9"
+    versionName "1.1.0"
   }
 
   buildTypes {
@@ -26,6 +26,6 @@ android {
 
 dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-  implementation "androidx.appcompat:appcompat:$appcompat_version"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
+  implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
 }
