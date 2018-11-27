@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-  compileSdkVersion compileSdk_version
+  compileSdkVersion rootProject.compileSdkVersion
 
   defaultConfig {
     applicationId "com.santalu.sample"
-    minSdkVersion minSdk_version
-    targetSdkVersion targetSdk_version
+    minSdkVersion rootProject.minSdkVersion
+    targetSdkVersion rootProject.targetSdkVersion
     versionCode 1
     versionName "1.0"
   }
@@ -19,19 +19,14 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
-
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
 }
 
 dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
-  implementation project(':library')
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-  implementation "androidx.appcompat:appcompat:$appcompat_version"
-  implementation "com.google.android.material:material:$material_version"
-  implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
-  implementation "androidx.gridlayout:gridlayout:$gridlayout_version"
+  implementation project(':diagonalimageview')
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
+  implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+  implementation "com.google.android.material:material:$rootProject.materialVersion"
+  implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
+  implementation "androidx.gridlayout:gridlayout:$rootProject.gridLayoutVersion"
 }
