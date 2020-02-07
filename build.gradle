@@ -3,20 +3,22 @@
 buildscript {
 
   ext {
-    // Sdk
-    compileSdkVersion = 28
-    targetSdkVersion = 28
-    minSdkVersion = 15
+    versions = [
+        // SDK
+        compileSdk  : 29,
+        targetSdk   : 29,
+        minSdk      : 15,
 
-    // Tools
-    gradleVersion = '3.2.1'
-    kotlinVersion = '1.3.10'
+        // TOOLS
+        gradle      : '3.5.3',
+        kotlin      : '1.3.61',
 
-    // Libraries
-    appCompatVersion = '1.0.2'
-    materialVersion = '1.0.0'
-    recyclerViewVersion = '1.0.0'
-    gridLayoutVersion = '1.0.0'
+        // CORE
+        appcompat   : '1.1.0',
+        material    : '1.1.0',
+        recyclerview: '1.1.0',
+        gridlayout  : '1.0.0'
+    ]
   }
 
   repositories {
@@ -25,11 +27,8 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:$gradleVersion"
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-
-    // NOTE: Do not place your application dependencies here; they belong
-    // in the individual module build.gradle files
+    classpath "com.android.tools.build:gradle:$versions.gradle"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
   }
 }
 

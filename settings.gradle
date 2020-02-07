@@ -1,1 +1,1 @@
-include ':app', ':diagonalimageview'
+include ':app', ':library'
