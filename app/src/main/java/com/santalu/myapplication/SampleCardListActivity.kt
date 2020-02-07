@@ -1,7 +1,5 @@
 package com.santalu.myapplication
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +13,12 @@ import kotlinx.android.synthetic.main.activity_list.recyclerView
  * Created by fatih.santalu on 7/24/2018.
  */
 
-class SampleCardListActivity : AppCompatActivity() {
+class SampleCardListActivity: AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_list)
+    supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     recyclerView.apply {
       setHasFixedSize(true)
@@ -27,11 +26,9 @@ class SampleCardListActivity : AppCompatActivity() {
     }
   }
 
-  class SampleAdapter : Adapter<SampleViewHolder>() {
+  class SampleAdapter: Adapter<SampleViewHolder>() {
 
-    override fun getItemCount(): Int {
-      return 20
-    }
+    override fun getItemCount(): Int = 20
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SampleViewHolder {
       val view = parent.inflate(R.layout.item_card_list)
@@ -44,17 +41,6 @@ class SampleCardListActivity : AppCompatActivity() {
       }
     }
 
-    class SampleViewHolder(itemView: View) : ViewHolder(itemView)
+    class SampleViewHolder(itemView: View): ViewHolder(itemView)
   }
-
-  companion object {
-
-    fun start(activity: Activity) {
-      with(activity) {
-        intent = Intent(this, SampleCardListActivity::class.java)
-        startActivity(intent)
-      }
-    }
-  }
-
 }

@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-  compileSdkVersion rootProject.compileSdkVersion
+  compileSdkVersion versions.compileSdk
 
   defaultConfig {
     applicationId "com.santalu.sample"
-    minSdkVersion rootProject.minSdkVersion
-    targetSdkVersion rootProject.targetSdkVersion
+    minSdkVersion versions.minSdk
+    targetSdkVersion versions.targetSdk
     versionCode 1
     versionName "1.0"
   }
@@ -23,10 +23,11 @@ android {
 
 dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
-  implementation project(':diagonalimageview')
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
-  implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
-  implementation "com.google.android.material:material:$rootProject.materialVersion"
-  implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
-  implementation "androidx.gridlayout:gridlayout:$rootProject.gridLayoutVersion"
+  implementation project(':library')
+
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+  implementation "androidx.appcompat:appcompat:$versions.appcompat"
+  implementation "com.google.android.material:material:$versions.material"
+  implementation "androidx.recyclerview:recyclerview:$versions.recyclerview"
+  implementation "androidx.gridlayout:gridlayout:$versions.gridlayout"
 }
